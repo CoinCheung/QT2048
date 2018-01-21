@@ -20,13 +20,12 @@ grid gr[16];
 /************************************************************/
 /* set the 2-dim array pointer of the field */
 void setField(void *indata, int inrow, int incolumn){
-    char i;
 
     row = inrow;
     column = incolumn;
 
     fields = (int**)malloc(sizeof(int*) * row); // reform the 1D array to 2D array
-    for(char i = 0; i < row; i ++)
+    for(unsigned char i = 0; i < row; i ++)
         fields[i] = (int*)indata + i * column;
 
 }
@@ -68,11 +67,10 @@ void initGame(){
 
 /* init the numbers of the panel */
 void initPanel(){
-    char i,j;
 
     // reset the values of the grids
-    for(i = 0; i < 4; i++)
-        for(j = 0; j < 4; j++)
+    for(unsigned char i = 0; i < 4; i++)
+        for(unsigned char j = 0; j < 4; j++)
             fields[i][j] = 0;
 
     generateNum();
@@ -84,8 +82,8 @@ void initPanel(){
 /* generate a new number in a random position */
 void generateNum()
 {
-    char i,j;
-    char len = 0;
+    unsigned char i,j;
+    unsigned char len = 0;
     int ind;
 
     // pick out all the blank grids
@@ -134,7 +132,7 @@ void keyRight(){
 /* transpose the matrix in vertical direction */
 void transposeVertical()
 {
-    char i,j;
+    unsigned char i,j;
 
     i = 0;
     while(i < 4)
@@ -165,7 +163,7 @@ void keyUp(){
 /* transpose the matrix around the main diagonal */
 void transposeDiag()
 {
-    char i,j;
+    unsigned char i,j;
 
     i = 0;
     while(i < 4)
@@ -196,7 +194,7 @@ void keyDown(){
 /* transpose the matrix around the vice diagonal */
 void transposeViceDiag()
 {
-    char i,j;
+    unsigned char i,j;
 
     i = 0;
     while(i < 4)
@@ -217,7 +215,7 @@ void transposeViceDiag()
 /* all numbers move and merge with the left neighbors */
 void mergeLeft()
 {
-    char i,j,k;
+    unsigned char i,j,k;
 
     i = 0;
     while(i < 4)

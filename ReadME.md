@@ -1,23 +1,28 @@
 
 This is a simple 2048 game written with python3 and c, the UI is created with PyQt5
 
-1. build  
+### Setup
 
-the packages that this game relies are: ctypes, numpy, cx-freeze. Before build this game, these packages are to be installed. Moreover, gcc is also required
+1. To setup, just run the script in the terminal
+```shell
+    $ cd QT2048
+    $ sh ./install.sh
 ```
-    sudo python3 -m pip install numpy --upgrade
-    sudo python3 -m pip install ctypes --upgrade
-    sudo python3 -m pip install cx-freeze --upgrade
+This will compile the libraries required by the program and pack all the program and its dependencies into folder ./Pack. You can move this ./Pack to other directories and run the program there. 
+```shell
+    $ cp -riv ./Pack/ some/other/path
+    $ cd some/other/path/Pack
+    $ ./main
 ```
 
-then just make in the shell
-``` 
+2. If you do not need to pack the program, you could simply build and run the program in the current directory.
+```shell
+    $ cd QT2048
     $ make
-```
-and run the game:
-```
-    cd build/exe*
-    ./main
+    $ python3 ./main.py
 ```
 
-2. to move the numbers left, right, up and down, the keys of a, d, w, s can be pressed
+
+### Operations
+The rule of the game is well known.
+The direction keys are 'ADWS', so in order to move the numbers 'left', 'right', 'up' and 'down', the keys 'a', 'd', 'w', 's' can be pressed.

@@ -1,28 +1,26 @@
-cflags = -fPIC -c -g
 CC = gcc
+CFLAGS = -fPIC -c -g
+LFLAGS_SO = -shared 
+BDIR = ./build
+LIBDIR = $(BDIR)/lib
 
 
-
-PRO: prepare lib2048.so buildexe
+# build the shared lib
+PRO: prepare $(LIBDIR)/lib2048.so
 
 prepare:
-	mkdir -p ./build ./build/lib
+	mkdir -p $(BDIR) $(LIBDIR)
 
-lib2048.so: lib2048.o debug.o
-	$(CC) -shared -o ./build/lib/lib2048.so ./build/lib2048.o ./build/debug.o 
+$(LIBDIR)/lib2048.so: $(BDIR)/lib2048.o
+	$(CC) $(LFLAGS_SO) -o $@ $<
 
-debug: lib2048.o debug.o
-	 $(CC) -o debug ./build/lib2048.o ./build/debug.o
+$(BDIR)/lib2048.o: so2048.c
+	$(CC) $(CFLAGS) $< -o $@
 
-lib2048.o: so2048.c
-	$(CC) $(cflags) so2048.c -o ./build/lib2048.o
-
-debug.o: debug.c
-	$(CC) $(cflags) debug.c -o ./build/debug.o
-
-buildexe: setup.py
+# pack the program
+exe: PRO setup.py
 	python3 setup.py build
 
 clean:
-	rm -rf ./build/
+	rm -rf ./build/ ./Pack bestScore.ini
 

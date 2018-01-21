@@ -19,7 +19,13 @@ class Implement2048(QtWidgets.QMainWindow,ui2048.Ui_MainWindow):
     #initialization of the Class
     def __init__(self):
         super(Implement2048,self).__init__()
-        self.lib = cdll.LoadLibrary(os.getcwd()+'/lib2048.so')
+
+        libpath = os.getcwd()+'/build/lib/lib2048.so'
+        if os.path.exists(libpath):
+            self.lib = cdll.LoadLibrary(os.getcwd()+'/build/lib/lib2048.so')
+        else:
+            self.lib = cdll.LoadLibrary(os.getcwd()+'/lib2048.so')
+
         self.setField()
         self.setupUi(self)
         self.initGameStatus()
@@ -29,9 +35,8 @@ class Implement2048(QtWidgets.QMainWindow,ui2048.Ui_MainWindow):
 
     # save the best score to file
     def storeBestScore(self):
-        f = open('bestScore.ini','w')
-        f.write(str(self.BestScore))
-        f.close()
+        with open('bestScore.ini','w') as f:
+            f.write(str(self.BestScore))
         print("best score saved")
 
 
@@ -48,10 +53,11 @@ class Implement2048(QtWidgets.QMainWindow,ui2048.Ui_MainWindow):
     def initGameStatus(self):
         # load the best Score from the storage file
         def loadScore():
-            if os.path.exists('bestScore.ini'):
-                f = open('bestScore.ini','r')
+            if not os.path.exists('bestScore.ini'):
+                with open('bestScore.ini','w') as w:
+                    w.write('0')
+            with open('bestScore.ini','r') as f:
                 self.lib.setBestScore(int(f.read()))
-                f.close()
 
         self.lib.initGame()
         loadScore()
@@ -130,9 +136,5 @@ if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
     obj = Implement2048()
     obj.show()
-  #  # debug
-  #    import time
-  #    time.sleep(40)
 
-  #  #
     sys.exit(app.exec_())

@@ -12,8 +12,8 @@ typedef int bool;
 
 typedef struct
 {
-    char r;
-    char c;
+    unsigned char r;
+    unsigned char c;
 } grid;
 
 
@@ -24,8 +24,6 @@ typedef struct
 #include<time.h> // 与时间种子相关
 #include<stdlib.h> // 与rand 相关
 #include<malloc.h>
-
-#include"debug.h"
 
 /************************************************************/
 /* variables */
